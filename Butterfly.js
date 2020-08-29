@@ -18,8 +18,8 @@ let particlesBottom = [];
 let frameCounter = 0;
 let imageNum = 1;
 let frameCount = 12;
-let minParticleSize = 5;
-let maxParticleSize = 15;
+let minParticleSize = 4;
+let maxParticleSize = 14;
 
 let particleSize = maxParticleSize;
 
@@ -29,7 +29,7 @@ getImg(butterflyUrl,960,660);
 function setup() {
   strokeControl = document.getElementById("strokeEnabledBox");
 
-  createCanvas(1280, 720);
+  createCanvas(962, 720);
   frameRate(60);
   physics = new VerletPhysics2D();
   physics.setWorldBounds(new Rect(0, 0, width, height));
