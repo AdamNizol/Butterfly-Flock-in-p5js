@@ -18,7 +18,8 @@ let frameCounter = 0;
 let imageNum = 1;
 
 //let curImage = [];
-getImg("Images/butterfly.png",960,660);
+let butterflyUrl = "Images/butterfly.png"
+getImg(butterflyUrl,960,660);
 
 function setup() {
   //createCanvas(window.innerWidth,window.innerHeight);
@@ -33,7 +34,7 @@ function setup() {
     physicsLeft.setWorldBounds(new Rect(-width/2, -height/2, width, height));
   } );*/
 
-  bg = loadImage("Images/butterfly.png");
+  bg = loadImage(butterflyUrl);
   physics.addBehavior(new GravityBehavior(new Vec2D(0,0.1)));
   //physics.addBehavior(new GravityBehavior(new Vec2D(0,-0.05)));
   p1 = new VerletParticle2D(10,10);
@@ -92,7 +93,7 @@ function draw() {
     physicsLeft.update();
     physicsRight.update();
     physicsBottom.update();
-    if(frameCounter >= 20){
+    if(frameCounter >= 40){
       frameCounter = 0;
       getImg("Images/img"+("000"+imageNum).slice(-4)+".jpg", 1280, 720);
       imageNum++;
@@ -190,6 +191,7 @@ function getPixel(x, y) {
 }
 function getImg(url, w, h) {
   var img = new Image();
+  img.crossOrigin = "Anonymous";
   img.onload = function()
     {
       context.drawImage(img, 0, 0);
