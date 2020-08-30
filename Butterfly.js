@@ -18,8 +18,8 @@ let particlesBottom = [];
 let frameCounter = 0;
 let imageNum = 1;
 let frameCount = 12;
-let minParticleSize = 4;
-let maxParticleSize = 14;
+let minParticleSize = 2;
+let maxParticleSize = 15;
 
 let particleSize = maxParticleSize;
 
@@ -30,6 +30,7 @@ function setup() {
   strokeControl = document.getElementById("strokeEnabledBox");
   mousePos = new Vec2D(mouseX, mouseY);
   let mouseAttraction = 0.5;
+  let mouseAttractionRange = 200;
 
   createCanvas(962, 720);
   frameRate(60);
@@ -38,9 +39,7 @@ function setup() {
 
   bg = loadImage(butterflyUrl);
   physics.addBehavior(new GravityBehavior(new Vec2D(0,0.1)));
-  //p1 = new VerletParticle2D(10,10);
-  //physics.addParticle(p1);
-  physics.addBehavior(new AttractionBehavior(mousePos, 350, mouseAttraction));
+  physics.addBehavior(new AttractionBehavior(mousePos, mouseAttractionRange, mouseAttraction));
 
   for(let i =0; i<600; i++){
     particles.push(new VerletParticle2D(Math.floor(Math.random()*width),Math.random()*660));
@@ -50,8 +49,7 @@ function setup() {
   physicsLeft = new VerletPhysics2D();
   physicsLeft.setWorldBounds(new Rect(0, 0, width, height));
   physicsLeft.addBehavior(new GravityBehavior(new Vec2D(0.1,0)));
-  //physicsLeft.addParticle(p1);
-  physicsLeft.addBehavior(new AttractionBehavior(mousePos, 350, mouseAttraction));
+  physicsLeft.addBehavior(new AttractionBehavior(mousePos, mouseAttractionRange, mouseAttraction));
 
   for(let i =0; i<600; i++){
     particlesLeft.push(new VerletParticle2D(Math.floor(Math.random()*width),Math.random()*660));
@@ -61,8 +59,7 @@ function setup() {
   physicsRight = new VerletPhysics2D();
   physicsRight.setWorldBounds(new Rect(0, 0, width, height));
   physicsRight.addBehavior(new GravityBehavior(new Vec2D(-0.1,0)));
-  //physicsRight.addParticle(p1);
-  physicsRight.addBehavior(new AttractionBehavior(mousePos, 350, mouseAttraction));
+  physicsRight.addBehavior(new AttractionBehavior(mousePos, mouseAttractionRange, mouseAttraction));
 
   for(let i =0; i<600; i++){
     particlesRight.push(new VerletParticle2D(Math.floor(Math.random()*width),Math.random()*660));
@@ -72,8 +69,7 @@ function setup() {
   physicsBottom = new VerletPhysics2D();
   physicsBottom.setWorldBounds(new Rect(0, 0, width, height));
   physicsBottom.addBehavior(new GravityBehavior(new Vec2D(0,-0.1)));
-  //physicsBottom.addParticle(p1);
-  physicsBottom.addBehavior(new AttractionBehavior(mousePos, 350, mouseAttraction));
+  physicsBottom.addBehavior(new AttractionBehavior(mousePos, mouseAttractionRange, mouseAttraction));
 
   for(let i =0; i<600; i++){
     particlesBottom.push(new VerletParticle2D(Math.floor(Math.random()*width),Math.random()*660));
@@ -109,9 +105,9 @@ function draw() {
     // fill(col[0],col[1],col[2],col[3]);
     // ellipse(p1.x, p1.y, 20,20);
     let col
+    let particleOpacity = 250
 
-
-    stroke('rgba(0,0,0,0.1)');
+    stroke('rgba(0,0,0,0.05)');
     if(strokeControl.checked){
       strokeWeight(1)
     }else{
@@ -125,7 +121,7 @@ function draw() {
       }
 
       col = getPixel(particles[i].x,particles[i].y);
-      fill(col[0],col[1],col[2],125);
+      fill(col[0],col[1],col[2],particleOpacity);
       ellipse(particles[i].x, particles[i].y, particleSize,particleSize);
     }
 
@@ -137,7 +133,7 @@ function draw() {
       }
 
       col = getPixel(particlesLeft[i].x,particlesLeft[i].y);
-      fill(col[0],col[1],col[2],125);
+      fill(col[0],col[1],col[2],particleOpacity);
       ellipse(particlesLeft[i].x, particlesLeft[i].y, particleSize,particleSize);
     }
 
@@ -149,7 +145,7 @@ function draw() {
       }
 
       col = getPixel(particlesRight[i].x,particlesRight[i].y);
-      fill(col[0],col[1],col[2],125);
+      fill(col[0],col[1],col[2],particleOpacity);
       ellipse(particlesRight[i].x, particlesRight[i].y, particleSize,particleSize);
     }
 
@@ -161,7 +157,7 @@ function draw() {
       }
 
       col = getPixel(particlesBottom[i].x,particlesBottom[i].y);
-      fill(col[0],col[1],col[2],125);
+      fill(col[0],col[1],col[2],particleOpacity);
       ellipse(particlesBottom[i].x, particlesBottom[i].y, particleSize,particleSize);
     }
 
